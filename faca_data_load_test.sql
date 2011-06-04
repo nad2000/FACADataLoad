@@ -1,12 +1,15 @@
 
-TRUNCATE TABLE raw_row;
+TRUNCATE TABLE raw_faca;
 
 DROP INDEX raw_faca_affs_idx ON raw_faca;
+DROP INDEX raw_faca_org_id_idx ON raw_faca;
+DROP INDEX raw_faca_occupationoraffiliation_idx ON raw_faca;
+
 
 -- 1) on Mac you should INFILE replace the path;
 -- 2) If your DB is remote, uncomment LOCAL and it WILL take longer becuase of the network speel limit
-LOAD DATA CONCURRENT /* LOCAL */ 
-    INFILE 'E:\\projects\\usaspending_data_loader\\data\\FACAMemberList1997.csv'
+LOAD DATA CONCURRENT /* LOCAL */
+    INFILE 'E:\\projects\\FACADataLoad\\data\\FACAMemberList1997.csv'
     IGNORE /* REPLACE */
     INTO TABLE raw_faca
     FIELDS TERMINATED BY ',' 
@@ -46,7 +49,7 @@ LOAD DATA CONCURRENT /* LOCAL */
         EndDate = STR_TO_DATE( @EndDate,'%m/%d/%Y');
     -- SET OccupationOrAffiliation = normal_name( @OccupationOrAffiliation);
     
-CREATE FULLTEXT INDEX raw_faca_affs_idx ON raw_faca (OccupationOrAffiliation);
+-- CREATE FULLTEXT INDEX raw_faca_affs_idx ON raw_faca (OccupationOrAffiliation);
 
 
     
