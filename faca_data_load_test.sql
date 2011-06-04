@@ -1,4 +1,3 @@
-
 TRUNCATE TABLE raw_faca;
 
 DROP INDEX raw_faca_affs_idx ON raw_faca;
