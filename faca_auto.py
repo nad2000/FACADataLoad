@@ -30,7 +30,7 @@ def getArgs():
         args.input
 
     """
-    parser = argparse.ArgumentParser(description='USA Spending Data Import')
+    parser = argparse.ArgumentParser(description='FACA Data Import')
     parser.add_argument( '-s', '--server', help='Server', default='localhost')
     parser.add_argument( '-P', '--port', help='Server communication port', default=3306)
     parser.add_argument( '-d', '--db', help='Database, e.g., cdrg_alpha', default='cdrg_alpha')
