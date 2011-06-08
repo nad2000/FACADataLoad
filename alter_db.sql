@@ -126,3 +126,32 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8;
 UPDATE orgs SET org_name = normal_name(org_name);
 UPDATE orgs SET org_name_length = LENGTH( org_name);
 
+DROP FUNCTION IF EXISTS normal_name;
+
+DELIMITER $$
+CREATE FUNCTION normal_name (v TEXT)
+RETURNS TEXT
+    COMMENT 'Normalize a string stripping delimiters and excluding delimiter repeats'
+    LANGUAGE SQL
+    DETERMINISTIC
+    CONTAINS SQL
+BEGIN
+SET v = TRIM(
+REPLACE(REPLACE(REPLACE(REPLACE( REPLACE(v,'\t',' '), '  ', ' '), '  ', ' '), '  ', ' '), '  ', ' ')
+);
+IF v='' THEN SET v=NULL; END IF;
+RETURN v;
+END$$
+
+DELIMITER ;
+
+-- TEST:
+/*
+SELECT LENGTH( v)=13, v FROM (
+SELECT normal_name( '    a   a  \t  a     a     a  \t     a             a  \t   ') AS v) AS t;
+SELECT normal_name(' \t  ');
+
+*/
+
+ALTER IGNORE TABLE orgs ADD agency_id INT NULL;
+
