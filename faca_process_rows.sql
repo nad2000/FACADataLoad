@@ -358,13 +358,12 @@ SELECT
     'advisory', comm_id, 'org', indiv_id, 'indiv', 
     startdate, enddate, @CurrentTS, memberdesignation, 
     representedgroup , appointmenttype , appointmentterm, payplan, paysource, chairperson
-FROM raw_faca AS r LEFT JOIN affs AS a
+FROM raw_faca AS r JOIN orgs AS o 
+    ON o.org_id = r.comm_id --r.org_id
+    AND o.is_advisory_committee
+LEFT JOIN affs AS a
   ON aff_e1_id=comm_id AND aff_e2_id=indiv_id 
-JOIN orgs AS o ON o.org_id = r.org_id
-WHERE r.comm_id  IS NOT NULL 
-    AND r.org_id IS NOT NULL 
-    AND aff_id IS NULL
-    AND o.is_advisory_committee;
+WHERE a.aff_id IS NULL;
 
 -- Process Employment Affiliations:
 INSERT IGNORE INTO affs
@@ -372,10 +371,8 @@ INSERT IGNORE INTO affs
     aff_start, aff_created)
 SELECT 
     'employment', r.org_id, 'org', indiv_id, 'indiv', fy, CURRENT_TIMESTAMP()
-FROM raw_faca AS r LEFT JOIN affs AS a
-  ON aff_e1_id=org_id AND aff_e2_id=indiv_id 
-JOIN orgs AS o ON o.org_id = r.org_id
-WHERE r.comm_id  IS NOT NULL 
-    AND r.org_id IS NOT NULL 
-    AND aff_id IS NULL
-    AND NOT( is_advisory_committee);
+FROM raw_faca AS r JOIN orgs AS o 
+    ON o.org_id = r.org_id AND NOT( is_advisory_committee)
+LEFT JOIN affs AS a
+    ON aff_e1_id=r.org_id AND aff_e2_id=r.indiv_id 
+WHERE a.aff_id IS NULL;

@@ -37,13 +37,7 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 ALTER TABLE orgs ADD is_advisory_committee BOOL DEFAULT FALSE; 
-
-UPDATE orgs
-SET is_advisory_committee =
-CASE 
-    WHEN org_sub_types LIKE '%AdvisoryCommittee%' THEN TRUE
-    ELSE FALSE
-END;
+UPDATE orgs SET is_advisory_committee=(org_sub_types LIKE '%AdvisoryCommittee%');
 
 DROP INDEX orgs_agencies_org_agency_abbr_idx ON orgs_agencies;
 CREATE INDEX orgs_agencies_org_agency_abbr_idx ON orgs_agencies(org_agency_abbr);
