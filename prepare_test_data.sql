@@ -9,3 +9,14 @@ DELETE FROM indivs_meta WHERE indiv_meta_indiv_id > @indivId/3;
 
 DELETE FROM orgs WHERE org_id > @orgId/3;
 DELETE FROM orgs_agencies WHERE org_agency_id > @agencyId/3;
+
+
+/*
+
+TRUNCATE TABLE indivs;
+TRUNCATE TABLE indivs_ext;
+TRUNCATE TABLE indivs_meta;
+TRUNCATE TABLE orgs;
+TRUNCATE TABLE orgs_agencies;
+
+*/

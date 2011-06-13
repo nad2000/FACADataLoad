@@ -359,7 +359,7 @@ SELECT
     startdate, enddate, @CurrentTS, memberdesignation, 
     representedgroup , appointmenttype , appointmentterm, payplan, paysource, chairperson
 FROM raw_faca AS r JOIN orgs AS o 
-    ON o.org_id = r.comm_id --r.org_id
+    ON o.org_id = r.comm_id -- r.org_id
     AND o.is_advisory_committee
 LEFT JOIN affs AS a
   ON aff_e1_id=comm_id AND aff_e2_id=indiv_id 

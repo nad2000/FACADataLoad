@@ -84,8 +84,8 @@ def loadRawData( fileName):
 TRUNCATE TABLE raw_faca;
 ALTER TABLE raw_faca DISABLE KEYS;
 
-DROP INDEX raw_faca_affs_idx ON raw_faca;
-DROP INDEX raw_faca_org_id_idx ON raw_faca;
+-- DROP INDEX raw_faca_affs_idx ON raw_faca;
+-- DROP INDEX raw_faca_org_id_idx ON raw_faca;
 DROP INDEX raw_faca_occupationoraffiliation_idx ON raw_faca;
 
 
